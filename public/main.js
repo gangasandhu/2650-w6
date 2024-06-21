@@ -207,6 +207,13 @@ $(function() {
     }
   });
 
+  // Status of the participants
+  
+  $('.status-btn').click(function() {
+    var message = ($(this).text()).toLowerCase();
+    socket.emit('status', message);
+  })
+
   $inputMessage.on('input', () => {
     updateTyping();
   });
@@ -252,6 +259,11 @@ $(function() {
     log(data.username + ' left');
     addParticipantsMessage(data);
     removeChatTyping(data);
+  });
+
+  //whenver the server emits 'status', show the status
+  socket.on('status', (data) => {
+    log(data.username + " is " + data.message);
   });
 
   // Whenever the server emits 'typing', show the typing message

@@ -73,4 +73,12 @@ io.on('connection', (socket) => {
       });
     }
   });
+
+  // show user status
+  socket.on('status', (data) => {
+    socket.broadcast.emit('status', {
+      username: socket.username,
+      message: data
+    });
+  })
 });
